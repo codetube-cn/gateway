@@ -1,0 +1,16 @@
+listen:
+  host: localhost
+  port: 9999
+routes:
+  - id: course1
+    url: http://localhost:9000
+    Predicates:
+      path: /v1/*
+      header: X-Id,^\d+$
+      method: get,post
+    Filters:
+      - StripPrefix=1
+  - id: course2
+    url: http://localhost:9000
+    Predicates:
+      path: /v2
