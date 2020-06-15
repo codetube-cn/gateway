@@ -16,7 +16,7 @@ func (this SimpleFilter) filter() interfaces.GatewayFilter {
 	}
 	filter, ok := filters.FilterMap.Load(filterValueSplit[0])
 	if ok {
-		return filter.(interfaces.FilterFactory).Apply()
+		return filter.(interfaces.FilterFactory).Apply(filterValueSplit[1])
 	}
 	return nil
 }

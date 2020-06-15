@@ -5,11 +5,12 @@ routes:
   - id: course1
     url: http://localhost:9000
     Predicates:
-      path: /v1/*
+      path: /v1/a/*
       header: X-Id,^\d+$
       method: get,post
     Filters:
-      - StripPrefix=1
+      - StripPrefix=2
+      - SetHeader=Name,dai,Age,20
   - id: course2
     url: http://localhost:9000
     Predicates:

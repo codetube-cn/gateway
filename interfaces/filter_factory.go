@@ -3,7 +3,7 @@ package interfaces
 import "net/http"
 
 type FilterFactory interface {
-	Apply() GatewayFilter
+	Apply(config interface{}) GatewayFilter
 }
 
 type ServerWebExchange struct {

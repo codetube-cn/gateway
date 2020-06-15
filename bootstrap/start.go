@@ -14,7 +14,6 @@ func Start() {
 
 	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
 		if route := config.Routes.Match(request); route != nil {
-			//request.URL.Path = strings.Replace(request.URL.Path, "/v1", "", -1)
 			remote, _ := url.Parse(route.Url)
 			exchange := interfaces.BuildServerWebExchange(request)
 			route.FilterBefore(exchange)
