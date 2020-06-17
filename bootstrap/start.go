@@ -11,13 +11,16 @@ import (
 
 func Start() {
 	config := config.InitConfig()
-
 	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
 		if route := config.Routes.Match(request); route != nil {
 			remote, _ := url.Parse(route.Url)
 			exchange := interfaces.BuildServerWebExchange(request)
-			route.FilterBefore(exchange)
+			responseFilters := route.FilterRequest(exchange)
 			proxy := httputil.NewSingleHostReverseProxy(remote)
+			proxy.ModifyResponse = func(response *http.Response) error {
+				responseFilters.Filter(response)
+				return nil
+			}
 			proxy.ServeHTTP(writer, request)
 		} else {
 			writer.WriteHeader(http.StatusNotFound)

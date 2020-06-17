@@ -12,10 +12,11 @@ type Predicates struct {
 }
 
 type Route struct {
-	Id         string
-	Url        string
-	Predicates Predicates
-	Filters    []interface{}
+	Id             string
+	Url            string
+	Predicates     Predicates
+	Filters        []interface{}
+	orderedFilters []interface{} //排序过后的过滤器
 }
 
 type Routes []*Route

@@ -14,7 +14,7 @@ func init() {
 type StripPrefixFilter struct{}
 
 func (this *StripPrefixFilter) Apply(config interface{}) interfaces.GatewayFilter {
-	return func(exchange *interfaces.ServerWebExchange) {
+	return func(exchange *interfaces.ServerWebExchange) interfaces.ResponseFilter {
 		path := exchange.Request.URL.Path
 		defaultIndex := 1
 		config := ValueConfig(config.(string))
@@ -26,7 +26,12 @@ func (this *StripPrefixFilter) Apply(config interface{}) interfaces.GatewayFilte
 		}
 		pathList := strings.Split(path, "/")
 		exchange.Request.URL.Path = strings.Join(pathList[defaultIndex+1:], "/")
+		return nil
 	}
+}
+
+func (this *StripPrefixFilter) GetOrder() int {
+	return 2
 }
 
 func NewStripPrefixFilter() *StripPrefixFilter {
