@@ -1,6 +1,6 @@
 package main
 
-import "cn.codetube.gateway/bootstrap"
+import "codetube.cn/gateway/bootstrap"
 
 func main() {
 	bootstrap.Start()

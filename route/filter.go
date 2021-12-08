@@ -1,8 +1,8 @@
 package route
 
 import (
-	"cn.codetube.gateway/interfaces"
-	"cn.codetube.gateway/route/filters"
+	"codetube.cn/gateway/interfaces"
+	"codetube.cn/gateway/route/filters"
 	"reflect"
 	"sort"
 	"strings"

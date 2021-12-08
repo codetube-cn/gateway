@@ -1,7 +1,7 @@
 package route
 
 import (
-	"cn.codetube.gateway/route/predicates"
+	"codetube.cn/gateway/route/predicates"
 )
 
 type Predicates struct {

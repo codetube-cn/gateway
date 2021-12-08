@@ -1,7 +1,7 @@
 package filters
 
 import (
-	"cn.codetube.gateway/interfaces"
+	"codetube.cn/gateway/interfaces"
 	"net/http"
 )
 

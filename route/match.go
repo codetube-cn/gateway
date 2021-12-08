@@ -1,7 +1,7 @@
 package route
 
 import (
-	"cn.codetube.gateway/interfaces"
+	"codetube.cn/gateway/interfaces"
 	"net/http"
 	"reflect"
 	"strings"

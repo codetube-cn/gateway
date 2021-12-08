@@ -1,18 +1,19 @@
 package config
 
 import (
-	"github.com/micro/go-micro/v2/config"
+	"gopkg.in/yaml.v3"
+	"io/ioutil"
 	"log"
 )
 
-func InitConfig() GatewayConfig {
+func InitConfig() *GatewayConfig {
 	configFile := "gateway.yaml"
-	err := config.LoadFile(configFile)
+	configFileContent, err := ioutil.ReadFile(configFile)
 	if err != nil {
 		log.Fatal(err)
 	}
-	gatewayConfig := GatewayConfig{}
-	err = config.Scan(&gatewayConfig)
+	gatewayConfig := &GatewayConfig{}
+	err = yaml.Unmarshal(configFileContent, gatewayConfig)
 	if err != nil {
 		log.Fatal(err)
 	}

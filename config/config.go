@@ -1,6 +1,6 @@
 package config
 
-import "cn.codetube.gateway/route"
+import "codetube.cn/gateway/route"
 
 type Listen struct {
 	Host string

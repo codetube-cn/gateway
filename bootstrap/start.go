@@ -1,8 +1,8 @@
 package bootstrap
 
 import (
-	"cn.codetube.gateway/config"
-	"cn.codetube.gateway/interfaces"
+	"codetube.cn/gateway/config"
+	"codetube.cn/gateway/interfaces"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
