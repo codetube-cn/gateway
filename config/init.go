@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"gopkg.in/yaml.v3"
 	"io/ioutil"
 	"log"
@@ -17,5 +18,6 @@ func InitConfig() *GatewayConfig {
 	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println(gatewayConfig.Routes[0])
 	return gatewayConfig
 }

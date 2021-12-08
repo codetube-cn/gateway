@@ -5,17 +5,17 @@ import (
 )
 
 type Predicates struct {
-	Header predicates.HeaderPredicate
-	Method predicates.MethodPredicate
-	Host   string
-	Path   predicates.PathPredicate
+	Header predicates.HeaderPredicate `yaml:"header"`
+	Method predicates.MethodPredicate `yaml:"method"`
+	Host   string                     `yaml:"host"`
+	Path   predicates.PathPredicate   `yaml:"path"`
 }
 
 type Route struct {
-	Id             string
-	Url            string
-	Predicates     Predicates
-	Filters        []interface{}
+	Id             string        `yaml:"id"`
+	Url            string        `yaml:"url"`
+	Predicates     Predicates    `yaml:"predicates"`
+	Filters        []interface{} `yaml:"filters"`
 	orderedFilters []interface{} //排序过后的过滤器
 }
 

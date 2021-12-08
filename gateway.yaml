@@ -4,19 +4,19 @@ listen:
 routes:
   - id: course1
     url: http://localhost:9000
-    Predicates:
+    predicates:
       path: /v1/*
       header: X-Id,^\d+$
       method: get,post
-    Filters:
+    filters:
       - StripPrefix=1
       - SetHeader=Name,dai,Age,20
       - CORS
   - id: course2
     url: http://localhost:9000
-    Predicates:
+    predicates:
       path: /v2/*
       method: get
-    Filters:
+    filters:
       - StripPrefix=1
       - SetHeader=Name,dai,Age,21
