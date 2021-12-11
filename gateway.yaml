@@ -2,21 +2,27 @@ listen:
   host: localhost
   port: 9999
 routes:
-  - id: course1
-    url: http://localhost:9000
+  # 首页
+  - id: index
+    url: http://localhost:8080/v1/html/
     predicates:
-      path: /v1/*
-      header: X-Id,^\d+$
-      method: get,post
-    filters:
-      - StripPrefix=1
-      - SetHeader=Name,dai,Age,20
-      - CORS
-  - id: course2
-    url: http://localhost:9000
-    predicates:
-      path: /v2/*
+      path: /
       method: get
-    filters:
-      - StripPrefix=1
-      - SetHeader=Name,dai,Age,21
+#  - id: course1
+#    url: http://localhost:9000
+#    predicates:
+#      path: /v1/*
+##      header: X-Id,^\d+$
+#      method: get,post
+#    filters:
+#      - StripPrefix=1
+#      - SetHeader=Name,dai,Age,20
+#      - CORS
+#  - id: course2
+#    url: http://localhost:9000
+#    predicates:
+#      path: /v2/*
+#      method: get
+#    filters:
+#      - StripPrefix=1
+#      - SetHeader=Name,dai,Age,21
