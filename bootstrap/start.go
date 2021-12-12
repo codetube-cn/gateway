@@ -1,9 +1,11 @@
 package bootstrap
 
 import (
+	"codetube.cn/gateway/components"
 	"codetube.cn/gateway/config"
 	"codetube.cn/gateway/interfaces"
 	"fmt"
+	"log"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
@@ -12,6 +14,10 @@ import (
 
 func Start() {
 	config := config.InitConfig()
+	err := components.DB.MysqlInit()
+	if err != nil {
+		log.Fatal(err)
+	}
 	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
 		if route := config.Routes.Match(request); route != nil {
 			remote, _ := url.Parse(route.Url)
