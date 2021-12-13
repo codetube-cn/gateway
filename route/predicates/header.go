@@ -9,8 +9,8 @@ import (
 
 type HeaderPredicate string
 
-func (this HeaderPredicate) Match(request *http.Request) bool {
-	s := string(this)
+func (p HeaderPredicate) Match(request *http.Request) bool {
+	s := string(p)
 	headers := strings.Split(s, ",")
 	headerCount := len(headers)
 	if headerCount < 2 || headerCount%2 != 0 {

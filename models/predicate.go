@@ -1,14 +1,22 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"codetube.cn/core/model"
+	"gorm.io/gorm"
+)
+
+type PredicateExtra struct {
+	Options []ExtraOption
+	DefaultValue ExtraDefaultValue
+}
 
 type Predicate struct {
 	gorm.Model
-	GatewayId  int
+	GatewayId  uint
 	Name       string
 	Code       string
 	InputType  int
 	ValueType  string
-	Extra      *map[string]interface{} `gorm:"type:json"`
+	Extra      model.JSON `gorm:"type:json"`
 	SortNumber int
 }

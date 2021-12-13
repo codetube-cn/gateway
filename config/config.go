@@ -8,6 +8,7 @@ type Listen struct {
 }
 
 type GatewayConfig struct {
+	Gateway string
 	Listen Listen
 	Routes route.Routes
 }

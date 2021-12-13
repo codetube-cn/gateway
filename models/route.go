@@ -4,8 +4,8 @@ import "gorm.io/gorm"
 
 type Route struct {
 	gorm.Model
-	GatewayId  int
-	GroupId    int
+	GatewayId  uint
+	GroupId    uint
 	RouteId    string
 	Name       string
 	Uri        string

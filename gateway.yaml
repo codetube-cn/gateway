@@ -1,3 +1,4 @@
+gateway: codetube
 listen:
   host: localhost
   port: 9999

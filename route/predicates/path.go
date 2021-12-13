@@ -7,8 +7,8 @@ import (
 
 type PathPredicate string
 
-func (this PathPredicate) Match(request *http.Request) bool {
-	matched, err := filepath.Match(string(this), request.URL.Path)
+func (p PathPredicate) Match(request *http.Request) bool {
+	matched, err := filepath.Match(string(p), request.URL.Path)
 	if err != nil || !matched {
 		return false
 	}

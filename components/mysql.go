@@ -10,6 +10,7 @@ import (
 )
 
 var DB = newDatabases()
+var GatewayDB *gorm.DB
 
 type databases struct {
 	Gateway *database
@@ -37,6 +38,7 @@ func (d *databases) MysqlInit() (err error) {
 	if err != nil {
 		return
 	}
+	GatewayDB = d.Gateway.DB
 	//其他数据库...
 	return
 }

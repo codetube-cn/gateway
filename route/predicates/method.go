@@ -7,8 +7,8 @@ import (
 
 type MethodPredicate string
 
-func (this MethodPredicate) Match(request *http.Request) bool {
-	s := string(this)
+func (p MethodPredicate) Match(request *http.Request) bool {
+	s := string(p)
 	methods := strings.Split(s, ",")
 	if len(methods) == 0 {
 		return true

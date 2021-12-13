@@ -2,9 +2,15 @@ package models
 
 import "gorm.io/gorm"
 
+type FilterExtra struct {
+	Args         []ExtraArg
+	Options      []ExtraOption
+	DefaultValue ExtraDefaultValue
+}
+
 type Filter struct {
 	gorm.Model
-	GatewayId  int
+	GatewayId  uint
 	Name       string
 	Code       string
 	InputType  int
