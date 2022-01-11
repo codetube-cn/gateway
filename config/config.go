@@ -1,6 +1,5 @@
 package config
 
-import "codetube.cn/gateway/route"
 
 type Listen struct {
 	Host string
@@ -10,5 +9,4 @@ type Listen struct {
 type GatewayConfig struct {
 	Gateway string
 	Listen Listen
-	Routes route.Routes
 }

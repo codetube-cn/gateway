@@ -1,6 +1,9 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"codetube.cn/core/model"
+	"gorm.io/gorm"
+)
 
 type Route struct {
 	gorm.Model
@@ -9,7 +12,17 @@ type Route struct {
 	RouteId    string
 	Name       string
 	Uri        string
-	Predicates *map[string]interface{} `gorm:"type:json"`
-	Filters    *map[string]interface{} `gorm:"type:json"`
-	SortNumber int
+	Predicates model.JSON
+	Filters    model.JSON
+	SortNumber uint
+}
+
+type RoutePredicate struct {
+	Predicate string
+	Value interface{}
+}
+
+type RouteFilter struct {
+	Filter string
+	Value interface{}
 }

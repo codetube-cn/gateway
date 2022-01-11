@@ -15,8 +15,8 @@ type ResponseFilter func(*http.Response)
 
 type ResponseFilters []ResponseFilter
 
-func (this ResponseFilters) Filter(response *http.Response) {
-	for _, filter := range this {
+func (f ResponseFilters) Filter(response *http.Response) {
+	for _, filter := range f {
 		filter(response)
 	}
 }

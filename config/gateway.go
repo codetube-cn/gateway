@@ -10,7 +10,6 @@ import (
 func GetGateway(code string) (gateway *models.Gateway, err error) {
 	gw := &models.Gateway{}
 	components.GatewayDB.Where("code = ?", code).First(gw)
-	fmt.Println(gw)
 	if gw.ID < 1 {
 		return nil, fmt.Errorf("can not found gateway[%s]", code)
 	}
@@ -20,6 +19,12 @@ func GetGateway(code string) (gateway *models.Gateway, err error) {
 //GetRouteGroups 获取路由分组
 func GetRouteGroups(gatewayId uint) (groups []*models.RouteGroup, err error) {
 	components.GatewayDB.Model(&models.RouteGroup{}).Where("gateway_id = ?", gatewayId).Scan(&groups)
+	return
+}
+
+//GetRoutes 获取路由
+func GetRoutes(gatewayId uint) (routes []*models.Route, err error) {
+	components.GatewayDB.Model(&models.Route{}).Where("gateway_id = ?", gatewayId).Order("sort_number asc, id asc").Scan(&routes)
 	return
 }
 

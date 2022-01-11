@@ -1,11 +1,20 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"codetube.cn/core/model"
+	"gorm.io/gorm"
+)
 
 type FilterExtra struct {
-	Args         []ExtraArg
-	Options      []ExtraOption
-	DefaultValue ExtraDefaultValue
+	Args struct {
+		Args []ExtraArg
+	}
+	Options struct {
+		Options []ExtraOption
+	}
+	DefaultValue struct {
+		DefaultValue ExtraValue
+	}
 }
 
 type Filter struct {
@@ -15,6 +24,6 @@ type Filter struct {
 	Code       string
 	InputType  int
 	ValueType  string
-	Extra      *map[string]interface{} `gorm:"type:json"`
+	Extra      model.JSON `json:"queryParam"`
 	SortNumber int
 }

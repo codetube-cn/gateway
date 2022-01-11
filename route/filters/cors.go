@@ -11,7 +11,11 @@ func init() {
 
 type CORSFilter struct{}
 
-func (this *CORSFilter) Apply(config interface{}) interfaces.GatewayFilter {
+func NewCORSFilter() *CORSFilter {
+	return &CORSFilter{}
+}
+
+func (f *CORSFilter) Apply(config interface{}) interfaces.GatewayFilter {
 	return func(exchange *interfaces.ServerWebExchange) interfaces.ResponseFilter {
 		return func(response *http.Response) {
 			response.Header.Add("Access-Control-Allow-Origin", "*")
@@ -23,10 +27,8 @@ func (this *CORSFilter) Apply(config interface{}) interfaces.GatewayFilter {
 	}
 }
 
-func (this *CORSFilter) GetOrder() int {
+func (f *CORSFilter) GetOrder() int {
 	return -1
 }
 
-func NewCORSFilter() *CORSFilter {
-	return &CORSFilter{}
-}
+

@@ -6,8 +6,8 @@ import (
 )
 
 type PredicateExtra struct {
-	Options []ExtraOption
-	DefaultValue ExtraDefaultValue
+	Options      []ExtraOption
+	DefaultValue interface{} `json:"default_value"`
 }
 
 type Predicate struct {
