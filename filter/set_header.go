@@ -30,7 +30,7 @@ var SetHeaderFilterArgs = []ArgCombo{
 
 // SetHeaderFilter set header 过滤器
 type SetHeaderFilter struct {
-	FilterContract
+	Contract
 	Value        []SetHeaderFilterValue //值
 	DefaultValue []SetHeaderFilterValue //默认值
 	Args         []ArgCombo
@@ -43,7 +43,7 @@ type SetHeaderFilterValue struct {
 }
 
 // NewSetHeaderFilter 创建过滤器
-func NewSetHeaderFilter() FilterInterface {
+func NewSetHeaderFilter() Interface {
 	return &SetHeaderFilter{}
 }
 

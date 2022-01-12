@@ -11,16 +11,16 @@ var (
 	InputTypeAdvance     = "advance"  //输入方式：高级模式
 )
 
-//FilterInterface 过滤器接口
-type FilterInterface interface {
+//Interface 过滤器接口
+type Interface interface {
 	//LoadValue 载入过滤器值，参数一般为 json
 	LoadValue(v string) error
 	//Apply 应用过滤器
 	Apply(exchange *ServerWebExchange, response *http.Response) error
 }
 
-//FilterContract 过滤器通用协议
-type FilterContract struct {
+//Contract 过滤器通用协议
+type Contract struct {
 	Name         string   //名称
 	Code         string   //标识
 	InputType    string   //输入方式：1|text|文本输入，2|select|选项，3|checkbox|多选，4|advance|高级模式（填写设定的args）

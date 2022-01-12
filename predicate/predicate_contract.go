@@ -8,16 +8,16 @@ var (
 	InputTypeMultiSelect = "checkbox" //输入方式：多选
 )
 
-//PredicateInterface 断言接口
-type PredicateInterface interface {
+//Interface 断言接口
+type Interface interface {
 	//LoadValue 载入断言值，参数一般为 json
 	LoadValue(v string) error
 	//Match 匹配断言
 	Match(request *http.Request) bool
 }
 
-//PredicateContract 断言通用协议
-type PredicateContract struct {
+//Contract 断言通用协议
+type Contract struct {
 	Name         string   //名称
 	Code         string   //标识
 	InputType    string   //输入方式：1|text|文本输入，2|select|选项，3|checkbox|多选，4|advance|高级模式（填写设定的args）

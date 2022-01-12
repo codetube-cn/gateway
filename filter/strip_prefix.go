@@ -23,13 +23,13 @@ var StripPrefixFilterArgs = &Arg{
 
 // StripPrefixFilter strip prefix 过滤器
 type StripPrefixFilter struct {
-	FilterContract
+	Contract
 	Value        string //值
 	DefaultValue string //默认值
 }
 
 // NewStripPrefixFilter 创建过滤器
-func NewStripPrefixFilter() FilterInterface {
+func NewStripPrefixFilter() Interface {
 	return &StripPrefixFilter{}
 }
 

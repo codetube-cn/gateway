@@ -10,7 +10,7 @@ type FilterValue string
 // Filter 路由过滤器
 type Filter struct {
 	Code   string
-	Filter filter.FilterInterface
+	Filter filter.Interface
 }
 
 // NewFilter 创建路由过滤器

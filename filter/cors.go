@@ -36,7 +36,7 @@ var CORSFilterArgs = []ArgCombo{
 
 // CORSFilter CORS 过滤器
 type CORSFilter struct {
-	FilterContract
+	Contract
 	Value        []CORSFilterValue //值
 	DefaultValue []CORSFilterValue //默认值
 	Args         []ArgCombo
@@ -49,7 +49,7 @@ type CORSFilterValue struct {
 }
 
 // NewCORSFilter 创建过滤器值
-func NewCORSFilter() FilterInterface {
+func NewCORSFilter() Interface {
 	return &CORSFilter{}
 }
 

@@ -8,13 +8,13 @@ import (
 
 // MethodPredicate method 断言
 type MethodPredicate struct {
-	PredicateContract
+	Contract
 	Value        []string //值
 	DefaultValue []string //默认值
 }
 
 // NewMethodPredicate 创建 method 断言
-func NewMethodPredicate() PredicateInterface {
+func NewMethodPredicate() Interface {
 	return &MethodPredicate{}
 }
 

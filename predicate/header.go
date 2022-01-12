@@ -8,13 +8,13 @@ import (
 
 // HeaderPredicate header 断言
 type HeaderPredicate struct {
-	PredicateContract
+	Contract
 	Value        []HeaderPredicateValue //值
 	DefaultValue []HeaderPredicateValue //默认值
 }
 
 // NewHeaderPredicate 创建 header 断言
-func NewHeaderPredicate() PredicateInterface {
+func NewHeaderPredicate() Interface {
 	return &HeaderPredicate{}
 }
 

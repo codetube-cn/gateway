@@ -8,13 +8,13 @@ import (
 
 // PathPredicate path 断言
 type PathPredicate struct {
-	PredicateContract
+	Contract
 	Value        string //值
 	DefaultValue string //默认值
 }
 
 // NewPathPredicate 创建 path 断言
-func NewPathPredicate() PredicateInterface {
+func NewPathPredicate() Interface {
 	return &PathPredicate{Value: "", DefaultValue: ""}
 }
 
