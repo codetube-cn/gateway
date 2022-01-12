@@ -1,24 +1,8 @@
 package config
 
-import (
-	"gopkg.in/yaml.v3"
-	"io/ioutil"
-	"log"
-)
+// GatewayConfig 网关配置
+var GatewayConfig *Config
 
-func InitConfig() *GatewayConfig {
-	configFile := "gateway.yaml"
-	configFileContent, err := ioutil.ReadFile(configFile)
-	if err != nil {
-		log.Fatal(err)
-	}
-	gatewayConfig := &GatewayConfig{}
-	err = yaml.Unmarshal(configFileContent, gatewayConfig)
-	if err != nil {
-		log.Fatal(err)
-	}
-	if gatewayConfig.Gateway == "" {
-		log.Fatal("config err: invalid gateway")
-	}
-	return gatewayConfig
+func init() {
+	GatewayConfig = InitConfig()
 }

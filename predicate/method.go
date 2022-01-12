@@ -1,4 +1,4 @@
-package predicates
+package predicate
 
 import (
 	"encoding/json"
@@ -6,20 +6,24 @@ import (
 	"strings"
 )
 
+// MethodPredicate method 断言
 type MethodPredicate struct {
 	PredicateContract
 	Value        []string //值
 	DefaultValue []string //默认值
 }
 
+// NewMethodPredicate 创建 method 断言
 func NewMethodPredicate() PredicateInterface {
 	return &MethodPredicate{}
 }
 
+//LoadValue 载入断言值，参数一般为 json
 func (p *MethodPredicate) LoadValue(v string) error {
 	return json.Unmarshal([]byte(v), &p.Value)
 }
 
+//Match 匹配断言
 func (p *MethodPredicate) Match(request *http.Request) bool {
 	//无值列表，为任意匹配
 	if len(p.Value) == 0 {

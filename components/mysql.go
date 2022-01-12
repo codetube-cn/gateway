@@ -1,38 +1,42 @@
 package components
 
 import (
-	"codetube.cn/core/config"
+	coreConfig "codetube.cn/core/config"
 	"codetube.cn/core/errors"
+	"codetube.cn/gateway/config"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"log"
 	"time"
 )
 
+// DB 数据库连接
 var DB = newDatabases()
+
+// GatewayDB 网关数据库连接
 var GatewayDB *gorm.DB
 
+// 数据库连接列表
 type databases struct {
 	Gateway *database
 }
 
+// 创建数据库连接列表
 func newDatabases() *databases {
 	return &databases{
 		Gateway: &database{
-			config: &config.MysqlConfig{
-				Dsn:     "codetube:djlwz123@tcp(www.daijulong.com:53306)/codetube_gateway?charset=utf8mb4&parseTime=True&loc=Local",
-				Maxidle: 5,
-				Maxopen: 10,
-			},
+			config: config.GatewayConfig.Mysql.TransToGormConfig(),
 		},
 	}
 }
 
+// 数据库连接
 type database struct {
-	config *config.MysqlConfig
+	config *coreConfig.MysqlConfigForGorm
 	DB     *gorm.DB
 }
 
+// MysqlInit 初始化数据库连接
 func (d *databases) MysqlInit() (err error) {
 	err = d.Gateway.connect()
 	if err != nil {
@@ -43,6 +47,7 @@ func (d *databases) MysqlInit() (err error) {
 	return
 }
 
+// 连接数据库
 func (d *database) connect() error {
 	if d.config == nil {
 		return errors.Wrap("connect database error", errors.ErrConfigNotExist)

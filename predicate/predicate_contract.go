@@ -1,4 +1,4 @@
-package predicates
+package predicate
 
 import "net/http"
 
@@ -10,7 +10,7 @@ var (
 
 //PredicateInterface 断言接口
 type PredicateInterface interface {
-	//LoadValue 载入过滤器值，参数一般为 json
+	//LoadValue 载入断言值，参数一般为 json
 	LoadValue(v string) error
 	//Match 匹配断言
 	Match(request *http.Request) bool

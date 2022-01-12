@@ -1,4 +1,4 @@
-package filters
+package filter
 
 import (
 	"encoding/json"
@@ -28,6 +28,7 @@ var SetHeaderFilterArgs = []ArgCombo{
 	},
 }
 
+// SetHeaderFilter set header 过滤器
 type SetHeaderFilter struct {
 	FilterContract
 	Value        []SetHeaderFilterValue //值
@@ -35,11 +36,13 @@ type SetHeaderFilter struct {
 	Args         []ArgCombo
 }
 
+// SetHeaderFilterValue 过滤器值
 type SetHeaderFilterValue struct {
 	Key   string `json:"key"`
 	Value string `json:"value"`
 }
 
+// NewSetHeaderFilter 创建过滤器
 func NewSetHeaderFilter() FilterInterface {
 	return &SetHeaderFilter{}
 }

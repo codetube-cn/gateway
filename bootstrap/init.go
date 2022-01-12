@@ -1,6 +1,8 @@
 package bootstrap
 
-import "codetube.cn/gateway/config"
+import (
+	"codetube.cn/gateway/gateway"
+)
 
-var gatewayConfig *config.GatewayConfig
-var gatewayRoutes = NewGatewayRoutes()
+// 网关路由
+var gatewayRoutes = gateway.NewRoutes()

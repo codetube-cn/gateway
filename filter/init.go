@@ -1,4 +1,4 @@
-package filters
+package filter
 
 //SystemFilters 系统支持的过滤器，只有这些过滤器才支持使用
 var SystemFilters map[string]func(v string) FilterInterface

@@ -1,4 +1,4 @@
-package predicates
+package predicate
 
 //SystemPredicates 系统支持的断言，只有这些断言才支持使用
 var SystemPredicates map[string]func(v string) PredicateInterface

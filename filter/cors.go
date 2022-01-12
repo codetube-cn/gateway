@@ -1,4 +1,4 @@
-package filters
+package filter
 
 import (
 	"encoding/json"
@@ -34,6 +34,7 @@ var CORSFilterArgs = []ArgCombo{
 	},
 }
 
+// CORSFilter CORS 过滤器
 type CORSFilter struct {
 	FilterContract
 	Value        []CORSFilterValue //值
@@ -41,11 +42,13 @@ type CORSFilter struct {
 	Args         []ArgCombo
 }
 
+// CORSFilterValue 过滤器值
 type CORSFilterValue struct {
 	Key   string `json:"key"`
 	Value string `json:"value"`
 }
 
+// NewCORSFilter 创建过滤器值
 func NewCORSFilter() FilterInterface {
 	return &CORSFilter{}
 }

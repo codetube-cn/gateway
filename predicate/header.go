@@ -1,4 +1,4 @@
-package predicates
+package predicate
 
 import (
 	"encoding/json"
@@ -6,25 +6,30 @@ import (
 	"regexp"
 )
 
+// HeaderPredicate header 断言
 type HeaderPredicate struct {
 	PredicateContract
 	Value        []HeaderPredicateValue //值
 	DefaultValue []HeaderPredicateValue //默认值
 }
 
+// NewHeaderPredicate 创建 header 断言
 func NewHeaderPredicate() PredicateInterface {
 	return &HeaderPredicate{}
 }
 
+// HeaderPredicateValue 断言值
 type HeaderPredicateValue struct {
 	Key   string `json:"key"`
 	Value string `json:"value"`
 }
 
+//LoadValue 载入断言值，参数一般为 json
 func (p *HeaderPredicate) LoadValue(v string) error {
 	return json.Unmarshal([]byte(v), &p.Value)
 }
 
+//Match 匹配断言
 func (p *HeaderPredicate) Match(request *http.Request) bool {
 	//逐一进行匹配
 	//header 中无 key，匹配失败，有 key 而不能匹配值（支持正则），匹配失败

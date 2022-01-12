@@ -1,4 +1,4 @@
-package filters
+package filter
 
 import (
 	"net/http"
@@ -52,15 +52,18 @@ type Option struct {
 	Value string //值
 }
 
+// ServerWebExchange 服务器 Web 交换器
 type ServerWebExchange struct {
 	Request *http.Request
 }
 
+// ResponseFilter 响应过滤器
 type ResponseFilter func(*http.Response)
 
-
+// GatewayFilter 网关过滤器执行函数
 type GatewayFilter func(exchange *ServerWebExchange) ResponseFilter
 
+// BuildServerWebExchange 创建服务器 Web 交换器
 func BuildServerWebExchange(request *http.Request) *ServerWebExchange {
 	return &ServerWebExchange{Request: request}
 }

@@ -1,0 +1,24 @@
+# 网关
+gateway: codetube
+# 监听信息
+listen:
+  # 监听主机
+  host: localhost
+  # 监听端口
+  port: 9999
+# MySQL 数据库连接信息
+mysql:
+  # 主机
+  host: www.daijulong.com
+  # 端口
+  port: 53306
+  # 数据库
+  database: codetube_gateway
+  # 账号
+  username: codetube
+  # 密码
+  password: djlwz123
+  # 最大空闲数
+  maxidle: 5
+  # 最大连接数
+  maxopen: 10

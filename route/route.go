@@ -1,22 +1,40 @@
 package route
 
-import (
-	"codetube.cn/gateway/route/predicates"
-)
+import "net/http"
 
-type Predicates struct {
-	Header predicates.HeaderPredicate `yaml:"header"`
-	Method predicates.MethodPredicate `yaml:"method"`
-	Host   string                     `yaml:"host"`
-	Path   predicates.PathPredicate   `yaml:"path"`
-}
-
+// Route 路由
 type Route struct {
-	Id             string        `yaml:"id"`
-	Url            string        `yaml:"url"`
-	Predicates     Predicates    `yaml:"predicates"`
-	Filters        []interface{} `yaml:"filters"`
-	orderedFilters []interface{} //排序过后的过滤器
+	ID             uint
+	GroupID        uint
+	Name           string
+	RouteID        string
+	Uri            string
+	Predicates     Predicates
+	Filters        Filters
+	PredicateCodes map[string]*Predicate //所有使用的断言 code，用于判断某个断言是否被路由使用
+	FilterCodes    map[string]*Filter    //所有使用的过滤器 code，用于判断某个过滤器是否被路由使用
+	SortNumber     uint
 }
 
-type Routes []*Route
+//GetUsedPredicate 获取路由使用的指定断言
+func (r *Route) GetUsedPredicate(code string) (*Predicate, bool) {
+	p, ok := r.PredicateCodes[code]
+	return p, ok
+}
+
+//GetUsedFilter 获取路由使用的指定过滤器
+func (r *Route) GetUsedFilter(code string) (*Filter, bool) {
+	f, ok := r.FilterCodes[code]
+	return f, ok
+}
+
+//Match 是否匹配断言
+func (r *Route) Match(request *http.Request) bool {
+	for _, p := range r.Predicates {
+		if !p.Predicate.Match(request) {
+			return false
+		}
+	}
+
+	return true
+}

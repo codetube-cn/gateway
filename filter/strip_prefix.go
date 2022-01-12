@@ -1,4 +1,4 @@
-package filters
+package filter
 
 import (
 	"encoding/json"
@@ -21,12 +21,14 @@ var StripPrefixFilterArgs = &Arg{
 	},
 }
 
+// StripPrefixFilter strip prefix 过滤器
 type StripPrefixFilter struct {
 	FilterContract
 	Value        string //值
 	DefaultValue string //默认值
 }
 
+// NewStripPrefixFilter 创建过滤器
 func NewStripPrefixFilter() FilterInterface {
 	return &StripPrefixFilter{}
 }
