@@ -9,15 +9,15 @@ listen:
 # MySQL 数据库连接信息
 mysql:
   # 主机
-  host: www.daijulong.com
+  host:
   # 端口
-  port: 53306
+  port: 3306
   # 数据库
-  database: codetube_gateway
+  database:
   # 账号
-  username: codetube
+  username:
   # 密码
-  password: djlwz123
+  password:
   # 最大空闲数
   maxidle: 5
   # 最大连接数
