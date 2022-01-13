@@ -20,8 +20,10 @@ func NewHeaderPredicate() Interface {
 
 // HeaderPredicateValue 断言值
 type HeaderPredicateValue struct {
-	Key   string `json:"key"`
-	Value string `json:"value"`
+	Key           string `json:"key"`            // header key，要注意大小写
+	Value         string `json:"value"`          //header value
+	MatchType     string `json:"match_type"`     //匹配模式，完全匹配|must、包含|include
+	CaseSensitive bool   `json:"case_sensitive"` //是否大小写敏感
 }
 
 //LoadValue 载入断言值，参数一般为 json
@@ -37,8 +39,15 @@ func (p *HeaderPredicate) Match(request *http.Request) bool {
 		if value, ok := request.Header[h.Key]; !ok {
 			return false
 		} else {
+			pattern := h.Value
+			if h.MatchType == "full" {
+				pattern = "^" + pattern + "$"
+			}
+			if !h.CaseSensitive {
+				pattern = "(?i)" + pattern
+			}
 			//如果为正则表达式，需要匹配
-			reg, err := regexp.Compile(h.Value)
+			reg, err := regexp.Compile(pattern)
 			if err != nil {
 				return false
 			}
