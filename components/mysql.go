@@ -18,7 +18,7 @@ var GatewayDB *gorm.DB
 
 // 数据库连接列表
 type databases struct {
-	Gateway *database
+	Gateway *database // 网关使用的数据库连接
 }
 
 // 创建数据库连接列表

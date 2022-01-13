@@ -1,11 +1,11 @@
 # 网关
 gateway: codetube
-# 监听信息
+# 默认监听信息
 listen:
-  # 监听主机
+  # 默认监听主机
   host: localhost
-  # 监听端口
-  port: 9999
+  # 默认监听端口
+  port: 8088
 # MySQL 数据库连接信息
 mysql:
   # 主机

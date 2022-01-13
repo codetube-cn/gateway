@@ -33,8 +33,8 @@ type GroupsMapping struct {
 }
 
 //NewGroupsMapping 创建路由分组 mapping
-func NewGroupsMapping() GroupsMapping {
-	return GroupsMapping{
+func NewGroupsMapping() *GroupsMapping {
+	return &GroupsMapping{
 		Groups: map[uint]*Group{},
 	}
 }

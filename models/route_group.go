@@ -5,12 +5,13 @@ import (
 	"gorm.io/gorm"
 )
 
+// RouteGroup 路由分组模型
 type RouteGroup struct {
 	gorm.Model
-	GatewayId  uint
-	Name       string
-	UriPrefix  string
-	Predicates model.JSON
-	Filters    model.JSON
-	SortNumber int
+	GatewayId  uint       //网关ID
+	Name       string     //名称
+	UriPrefix  string     //URI 前缀
+	Predicates model.JSON //路由分组断言
+	Filters    model.JSON //路由分组过滤器
+	SortNumber int        //排序序号
 }

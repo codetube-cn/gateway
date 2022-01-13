@@ -9,15 +9,15 @@ import (
 
 // Listen 网关监听配置
 type Listen struct {
-	Host string
-	Port int
+	Host string //监听主机
+	Port int    //监听端口
 }
 
 // Config 网关配置
 type Config struct {
-	Gateway string             //网关标识
-	Listen  Listen             //网关监听配置
-	Mysql   config.MysqlConfig //数据库连接配置
+	Gateway string              //网关标识
+	Listen  *Listen             //网关监听配置
+	Mysql   *config.MysqlConfig //数据库连接配置
 }
 
 // NewConfig 创建网关配置

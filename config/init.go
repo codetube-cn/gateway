@@ -4,5 +4,6 @@ package config
 var GatewayConfig *Config
 
 func init() {
+	//初始化配置
 	GatewayConfig = InitConfig()
 }
