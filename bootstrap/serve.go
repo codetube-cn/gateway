@@ -10,8 +10,8 @@ import (
 	"strconv"
 )
 
-//serve 启动监听服务
-func serve() {
+//http服务
+func httpServer() *http.Server {
 	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
 		if route := gatewayRoutes.GetMatchedRoute(request); route != nil {
 			remote, _ := url.Parse(route.Uri)
@@ -32,6 +32,8 @@ func serve() {
 		}
 	})
 
-	fmt.Println("Gateway Serve: " + config.GatewayConfig.Listen.Host+":"+strconv.Itoa(config.GatewayConfig.Listen.Port))
-	http.ListenAndServe(config.GatewayConfig.Listen.Host+":"+strconv.Itoa(config.GatewayConfig.Listen.Port), nil)
+	return &http.Server{
+		Addr:    config.GatewayConfig.Listen.Host+":"+strconv.Itoa(config.GatewayConfig.Listen.Port),
+		Handler: http.DefaultServeMux,
+	}
 }

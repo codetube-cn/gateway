@@ -11,45 +11,56 @@ import (
 	"log"
 )
 
-//loadGateway 载入网关
 func loadGateway() {
-	//获取网关
-	gw, err := gateway.GetGateway(config.GatewayConfig.Gateway)
+	//从数据库网关
+	gwm, err := gateway.GetGateway(config.GatewayConfig.Gateway)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	//网关监听信息
-	if gw.Host != "" {
-		config.GatewayConfig.Listen.Host = gw.Host
+	if gwm.Host != "" {
+		config.GatewayConfig.Listen.Host = gwm.Host
+	} else if config.GatewayConfig.Listen.Host == "" {
+		config.GatewayConfig.Listen.Host = "localhost"
 	}
-	if gw.Port > 0 {
-		config.GatewayConfig.Listen.Port = gw.Port
+	if gwm.Port > 0 {
+		config.GatewayConfig.Listen.Port = gwm.Port
+	} else if config.GatewayConfig.Listen.Port < 1000 {
+		config.GatewayConfig.Listen.Port = 8088
 	}
+	gw = gwm
+}
 
+// 获取网关所有路由（路由分组 mapping 及各路由）
+func getGatewayRoutes() (*route.GroupsMapping, *gateway.Routes, error) {
 	//载入路由分组 mapping
-	err = loadRouteGroupMapping(gw.ID)
+	groupsMapping, err := getRouteGroupMapping(gw.ID)
 	if err != nil {
-		log.Fatal(err)
+		return nil, nil, err
 	}
 
 	//读取路由
 	routes, _ := gateway.GetRoutes(gw.ID)
+	gwRoutes := gateway.NewRoutes()
 	//转换路由并压入网关路由列表
 	for _, r := range routes {
-		gr, err := transRoute(r)
+		gr, err := transRoute(r, groupsMapping)
 		if err != nil {
-			log.Fatal(err)
+			return nil, nil, err
 		}
-		gatewayRoutes.Routes = append(gatewayRoutes.Routes, gr)
+		gwRoutes.Routes = append(gwRoutes.Routes, gr)
 	}
+
+	return groupsMapping, gwRoutes, nil
 }
 
-//载入路由分组 mapping
-func loadRouteGroupMapping(gatewayId uint) error {
+//获取路由分组 mapping
+func getRouteGroupMapping(gatewayId uint) (*route.GroupsMapping, error) {
 	//获取 routeGroupModel
 	//将 routeGroupModel 按 ID 索引
 	routeGroups, _ := gateway.GetRouteGroups(gatewayId)
+	groupsMapping := route.NewGroupsMapping()
 	for _, routeGroupModel := range routeGroups {
 		routeGroup := route.NewGroup()
 		routeGroup.Name = routeGroupModel.Name
@@ -63,7 +74,7 @@ func loadRouteGroupMapping(gatewayId uint) error {
 		var gf []models.RouteFilter
 		err := routeGroupModel.Filters.Unmarshal(&gf)
 		if err != nil {
-			return err
+			return groupsMapping, err
 		}
 		for _, f := range gf {
 			v, _ := json.Marshal(f.Value)
@@ -81,7 +92,7 @@ func loadRouteGroupMapping(gatewayId uint) error {
 		var gp []models.RoutePredicate
 		err = routeGroupModel.Predicates.Unmarshal(&gp)
 		if err != nil {
-			return err
+			return groupsMapping, err
 		}
 		for _, p := range gp {
 			v, _ := json.Marshal(p.Value)
@@ -94,14 +105,14 @@ func loadRouteGroupMapping(gatewayId uint) error {
 
 		routeGroup.Predicates = routeGroupPredicates
 		routeGroup.PredicateCodes = routeGroupPredicateCodes
-		routeGroupsMapping.Append(routeGroupModel.ID, routeGroup)
+		groupsMapping.Append(routeGroupModel.ID, routeGroup)
 	}
 
-	return nil
+	return groupsMapping, nil
 }
 
 //将数据库中路由转换成路由对象
-func transRoute(r *models.Route) (*route.Route, error) {
+func transRoute(r *models.Route, gm *route.GroupsMapping) (*route.Route, error) {
 	//路由处理
 	//uri 要加上分组的 uri_prefix
 	//predicate 和 filter 要覆盖分组的
@@ -161,7 +172,7 @@ func transRoute(r *models.Route) (*route.Route, error) {
 
 	//路由适配分组
 	if r.GroupId > 0 {
-		if rg, ok := routeGroupsMapping.Get(r.GroupId); ok {
+		if rg, ok := gm.Get(r.GroupId); ok {
 			//增加分组 Uri前缀
 			if rg.UriPrefix != "" {
 				gr.RouteID = rg.UriPrefix + gr.Uri
@@ -201,7 +212,7 @@ func transRoute(r *models.Route) (*route.Route, error) {
 			}
 			for _, f := range gr.Filters {
 				//路由中声明的断言，如果在路由分组中未被声明，才会被使用
-				if _, ok := rg.GetUsedFilter(f.Code); !ok {
+				if _, ok = rg.GetUsedFilter(f.Code); !ok {
 					rfs = append(rfs, f)
 					rfcs[f.Code] = f
 				}
