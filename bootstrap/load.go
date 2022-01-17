@@ -9,6 +9,7 @@ import (
 	"codetube.cn/gateway/route"
 	"encoding/json"
 	"log"
+	"time"
 )
 
 func loadGateway() {
@@ -226,4 +227,39 @@ func transRoute(r *models.Route, gm *route.GroupsMapping) (*route.Route, error) 
 	}
 
 	return gr, nil
+}
+
+// 定时重载网关配置
+func watchGateway() *time.Ticker {
+	interval := 5
+	if config.GatewayConfig.WatchIntervalSeconds > 0 {
+		interval = config.GatewayConfig.WatchIntervalSeconds
+	}
+	log.Println("重新加载网关配置定时器时间间隔（秒）：", interval)
+	t := time.NewTicker(time.Duration(interval) * time.Second)
+	go func() {
+		defer t.Stop()
+		for {
+			select {
+			case <-t.C:
+				//@todo 这里最好加个缓存判断，毕竟网关配置不会经常动，每次查数据库过于浪费
+				//在启动时生成一个 uuid 来标识当前进程，值为最近刷新时间（过期时间 2 倍于配置的间隔时间，如果没有，则设置为当前时间，且当前不处理）
+				//在网关相关变更时，要求有一个网关 code 的缓存，值为最后变更时间（如无，则当作无变更，不处理）
+				//当网关最后变更时间 > 最近刷新时间时，才重新载入配置
+				go func() {
+					if err := recover(); err != nil {
+						log.Printf("recover: %v", err)
+					}
+					rGm, rRs, rErr := getGatewayRoutes()
+					if rErr != nil {
+						log.Printf("error: %v\n", rErr)
+					} else {
+						routeGroupsMapping = rGm
+						gatewayRoutes = rRs
+					}
+				}()
+			}
+		}
+	}()
+	return t
 }

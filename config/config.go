@@ -15,9 +15,10 @@ type Listen struct {
 
 // Config 网关配置
 type Config struct {
-	Gateway string              //网关标识
-	Listen  *Listen             //网关监听配置
-	Mysql   *config.MysqlConfig //数据库连接配置
+	Gateway              string              `yaml:"gateway"`                //网关标识
+	WatchIntervalSeconds int                 `yaml:"watch-interval-seconds"` //监听配置变化时间间隔（秒）
+	Listen               *Listen             `yaml:"listen"`                 //网关监听配置
+	Mysql                *config.MysqlConfig `yaml:"mysql"`                  //数据库连接配置
 }
 
 // NewConfig 创建网关配置

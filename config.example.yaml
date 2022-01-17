@@ -1,5 +1,7 @@
 # 网关
 gateway: codetube
+# 监听重载配置间隔
+watch-interval-seconds: 5
 # 默认监听信息
 listen:
   # 默认监听主机

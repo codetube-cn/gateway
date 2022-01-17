@@ -44,7 +44,8 @@ func Start() {
 		log.Println("Gateway Serve: " + server.Addr)
 	}()
 
-	//重载网关变更
+	//监听重载网关变更
+	t := watchGateway()
 
 	//监听退出信号
 	go func() {
@@ -55,14 +56,15 @@ func Start() {
 	getErr := <-BootErrChan
 	log.Println(getErr)
 
+	//关闭重载网关变更
+	t.Stop()
+
 	//关闭服务
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	if err = server.Shutdown(ctx); err != nil {
 		log.Fatal("Server Shutdown:", err)
 	}
+	log.Println("watch gateway stop ......")
 	log.Println("Server Shutdown ......")
-
-	//关闭重载网关变更
-
 }
