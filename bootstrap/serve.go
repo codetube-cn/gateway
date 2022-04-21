@@ -3,7 +3,7 @@ package bootstrap
 import (
 	"codetube.cn/gateway/config"
 	"codetube.cn/gateway/filter"
-	"fmt"
+	"log"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
@@ -24,7 +24,7 @@ func httpServer() *http.Server {
 				return nil
 			}
 			proxy.ErrorHandler = func(writer http.ResponseWriter, request *http.Request, err error) {
-				fmt.Println(err)
+				log.Println(err)
 			}
 			proxy.ServeHTTP(writer, request)
 		} else {
@@ -33,7 +33,7 @@ func httpServer() *http.Server {
 	})
 
 	return &http.Server{
-		Addr:    config.GatewayConfig.Listen.Host+":"+strconv.Itoa(config.GatewayConfig.Listen.Port),
+		Addr:    config.GatewayConfig.Listen.Host + ":" + strconv.Itoa(config.GatewayConfig.Listen.Port),
 		Handler: http.DefaultServeMux,
 	}
 }

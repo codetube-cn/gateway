@@ -176,7 +176,7 @@ func transRoute(r *models.Route, gm *route.GroupsMapping) (*route.Route, error) 
 		if rg, ok := gm.Get(r.GroupId); ok {
 			//增加分组 Uri前缀
 			if rg.UriPrefix != "" {
-				gr.RouteID = rg.UriPrefix + gr.Uri
+				gr.Uri = rg.UriPrefix + gr.Uri
 			}
 			//增加分组断言
 			rps := make([]*route.Predicate, 0)    //路由所有断言
