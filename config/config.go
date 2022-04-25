@@ -15,6 +15,7 @@ type Listen struct {
 
 // Config 网关配置
 type Config struct {
+	JwtKey               string              `yaml:"jwt-key"`                //jwt key
 	Gateway              string              `yaml:"gateway"`                //网关标识
 	WatchIntervalSeconds int                 `yaml:"watch-interval-seconds"` //监听配置变化时间间隔（秒）
 	Listen               *Listen             `yaml:"listen"`                 //网关监听配置

@@ -8,6 +8,7 @@ type Group struct {
 	Filters        Filters
 	PredicateCodes map[string]*Predicate //所有使用的断言 code，用于判断某个断言是否被路由分组使用
 	FilterCodes    map[string]*Filter    //所有使用的过滤器 code，用于判断某个过滤器是否被路由分组使用
+	Auth           uint
 }
 
 // NewGroup 创建路由分组
@@ -49,4 +50,3 @@ func (m *GroupsMapping) Get(id uint) (*Group, bool) {
 	rg, ok := m.Groups[id]
 	return rg, ok
 }
-

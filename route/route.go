@@ -11,6 +11,7 @@ type Route struct {
 	Uri            string
 	Predicates     Predicates
 	Filters        Filters
+	Auth           uint
 	PredicateCodes map[string]*Predicate //所有使用的断言 code，用于判断某个断言是否被路由使用
 	FilterCodes    map[string]*Filter    //所有使用的过滤器 code，用于判断某个过滤器是否被路由使用
 	SortNumber     uint

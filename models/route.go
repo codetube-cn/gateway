@@ -15,6 +15,7 @@ type Route struct {
 	Uri        string     //URI
 	Predicates model.JSON //路由使用的断言
 	Filters    model.JSON //路由使用的过滤器
+	Auth       uint       //鉴权
 	SortNumber uint       //排序序号
 }
 

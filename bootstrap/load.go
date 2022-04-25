@@ -7,6 +7,7 @@ import (
 	"codetube.cn/gateway/models"
 	"codetube.cn/gateway/predicate"
 	"codetube.cn/gateway/route"
+	"codetube.cn/gateway/vars"
 	"encoding/json"
 	"log"
 	"time"
@@ -66,6 +67,7 @@ func getRouteGroupMapping(gatewayId uint) (*route.GroupsMapping, error) {
 		routeGroup := route.NewGroup()
 		routeGroup.Name = routeGroupModel.Name
 		routeGroup.UriPrefix = routeGroupModel.UriPrefix
+		routeGroup.Auth = routeGroupModel.Auth
 		routeGroupFilters := make(route.Filters, 0)
 		routeGroupPredicates := make(route.Predicates, 0)
 		routeGroupPredicateCodes := map[string]*route.Predicate{}
@@ -127,6 +129,7 @@ func transRoute(r *models.Route, gm *route.GroupsMapping) (*route.Route, error) 
 		Uri:            r.Uri,
 		Predicates:     nil,
 		Filters:        nil,
+		Auth:           r.Auth,
 		PredicateCodes: map[string]*route.Predicate{},
 		FilterCodes:    map[string]*route.Filter{},
 		SortNumber:     r.SortNumber,
@@ -178,6 +181,10 @@ func transRoute(r *models.Route, gm *route.GroupsMapping) (*route.Route, error) 
 			if rg.UriPrefix != "" {
 				gr.Uri = rg.UriPrefix + gr.Uri
 			}
+			//鉴权，如果设定为继承，取分组值
+			if gr.Auth == vars.JwtAuthExtend {
+				gr.Auth = rg.Auth
+			}
 			//增加分组断言
 			rps := make([]*route.Predicate, 0)    //路由所有断言
 			rpcs := map[string]*route.Predicate{} //路由所有断言 mapping
@@ -223,6 +230,10 @@ func transRoute(r *models.Route, gm *route.GroupsMapping) (*route.Route, error) 
 			gr.PredicateCodes = rpcs
 			gr.Filters = rfs
 			gr.FilterCodes = rfcs
+		}
+		//鉴权，无分组且为继承，视为无需鉴权
+		if gr.Auth == vars.JwtAuthExtend {
+			gr.Auth = vars.JwtAuthNot
 		}
 	}
 
