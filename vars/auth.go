@@ -1,6 +1,6 @@
 package vars
 
-var (
+const (
 	JwtAuthExtend uint = 0 // 鉴权：继承自分组，如果路由无分组，则视同为无需鉴权
 	JwtAuthNot    uint = 1 // 鉴权：无需鉴权
 	JwtAuthMust   uint = 2 // 鉴权：必须鉴权
